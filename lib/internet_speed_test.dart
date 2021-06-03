@@ -65,10 +65,16 @@ class InternetSpeedTest {
             rate /= 1000;
             unit = SpeedUnit.Mbps;
             if(downloadSteps > 5){
-               _callbacksById[call.arguments["id"]].item3(average, unit);
-              downloadSteps = 0;
-              downloadRate = 0;
-              _callbacksById.remove(call.arguments["id"]);
+                print("asdasdasdasd-----------");
+                downloadRate += call.arguments['transferRate'] ~/ 1000;
+                double average = (downloadRate ~/ downloadSteps).toDouble();
+                SpeedUnit unit = SpeedUnit.Kbps;
+                average /= 1000;
+                unit = SpeedUnit.Mbps;
+                _callbacksById[call.arguments["id"]].item3(average, unit);
+                downloadSteps = 0;
+                downloadRate = 0;
+                _callbacksById.remove(call.arguments["id"]);
             }else{
               _callbacksById[call.arguments["id"]]
                 .item2(call.arguments['percent'].toDouble(), rate, unit);
