@@ -161,12 +161,7 @@ class InternetSpeedTest {
         fileSize: fileSize);
   }
   
-  Future<CancelListening> cancelDownloading(
-      {@required DoneCallback onDone,
-      @required ProgressCallback onProgress,
-      @required ErrorCallback onError,
-      int fileSize = 200000,
-      String testServer = 'http://ipv4.ikoula.testdebit.info/1M.iso'}) async {
+  Future<CancelListening> cancelDownloading() async {
         _channel.setMethodCallHandler(null);
         return () {
           _channel.invokeMethod("cancelListening", currentListenerId);
