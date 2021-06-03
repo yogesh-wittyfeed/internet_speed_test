@@ -164,8 +164,8 @@ class InternetSpeedTest {
   Future<CancelListening> cancelDownloading() async {
         _channel.setMethodCallHandler(null);
         return () {
-          _channel.invokeMethod("cancelListening", currentListenerId);
-          _callbacksById.remove(currentListenerId);
+          _channel.invokeMethod("cancelListening", CallbacksEnum.START_UPLOAD_TESTING.index);
+          _callbacksById.remove(CallbacksEnum.START_UPLOAD_TESTING.index);
         };
   }
 }
