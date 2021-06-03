@@ -65,7 +65,7 @@ class InternetSpeedTest {
             rate /= 1000;
             unit = SpeedUnit.Mbps;
             _callbacksById[call.arguments["id"]]
-              .item2(call.arguments['percent'].toDouble(), rate, unit);
+                .item2(call.arguments['percent'].toDouble(), rate, unit);
           }
         } else if (call.arguments["id"] as int ==
             CallbacksEnum.START_UPLOAD_TESTING.index) {
@@ -123,7 +123,7 @@ class InternetSpeedTest {
     int currentListenerId = callbacksEnum.index;
     print('test $currentListenerId');
     _callbacksById[currentListenerId] = callback;
-    _channel.invokeMethod(
+    await _channel.invokeMethod(
       "startListening",
       {
         'id': currentListenerId,
@@ -161,9 +161,42 @@ class InternetSpeedTest {
         fileSize: fileSize);
   }
   
-  Future<CancelListening> cancelDownloadTesting() async {
-    print("===cancelDownloadTesting called===");
-    _channel.invokeMethod("cancelListening", CallbacksEnum.START_DOWNLOAD_TESTING.index);
-    _callbacksById.remove(CallbacksEnum.START_DOWNLOAD_TESTING.index);
+  Future<CancelListening> getDownloadingSpeed(
+      {@required DoneCallback onDone,
+      @required ProgressCallback onProgress,
+      @required ErrorCallback onError,
+      int fileSize = 200000,
+      String testServer = 'http://ipv4.ikoula.testdebit.info/1M.iso'}) async {
+    return await _startListeningNew(Tuple3(onError, onProgress, onDone),
+        CallbacksEnum.START_DOWNLOAD_TESTING, testServer,
+        fileSize: fileSize);
+  }
+  
+  Future<CancelListening> _startListeningNew(
+      Tuple3<ErrorCallback, ProgressCallback, DoneCallback> callback,
+      CallbacksEnum callbacksEnum,
+      String testServer,
+      {Map<String, dynamic> args,
+      int fileSize = 200000}) async {
+        print(_methodCallHandler);
+    print('arguments are ${_methodCallHandler.arguments}');
+    
+//     _channel.setMethodCallHandler(_methodCallHandler);
+//     int currentListenerId = callbacksEnum.index;
+//     print('test $currentListenerId');
+//     _callbacksById[currentListenerId] = callback;
+//     await _channel.invokeMethod(
+//       "startListening",
+//       {
+//         'id': currentListenerId,
+//         'args': args,
+//         'testServer': testServer,
+//         'fileSize': fileSize,
+//       },
+//     );
+//     return () {
+//       _channel.invokeMethod("cancelListening", currentListenerId);
+//       _callbacksById.remove(currentListenerId);
+//     };
   }
 }
