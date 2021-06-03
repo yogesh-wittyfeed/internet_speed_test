@@ -64,22 +64,8 @@ class InternetSpeedTest {
             SpeedUnit unit = SpeedUnit.Kbps;
             rate /= 1000;
             unit = SpeedUnit.Mbps;
-            if(downloadSteps > 5){
-                print("asdasdasdasd-----------");
-                downloadRate += call.arguments['transferRate'] ~/ 1000;
-                double average = (downloadRate ~/ downloadSteps).toDouble();
-                SpeedUnit unit = SpeedUnit.Kbps;
-                average /= 1000;
-                unit = SpeedUnit.Mbps;
-                _callbacksById[call.arguments["id"]].item3(average, unit);
-                downloadSteps = 0;
-                downloadRate = 0;
-                _callbacksById.remove(call.arguments["id"]);
-            }else{
-              _callbacksById[call.arguments["id"]]
-                .item2(call.arguments['percent'].toDouble(), rate, unit);
-            }
-            
+            _callbacksById[call.arguments["id"]]
+              .item2(call.arguments['percent'].toDouble(), rate, unit);
           }
         } else if (call.arguments["id"] as int ==
             CallbacksEnum.START_UPLOAD_TESTING.index) {
@@ -137,15 +123,15 @@ class InternetSpeedTest {
     int currentListenerId = callbacksEnum.index;
     print('test $currentListenerId');
     _callbacksById[currentListenerId] = callback;
-    await _channel.invokeMethod(
-      "startListening",
-      {
-        'id': currentListenerId,
-        'args': args,
-        'testServer': testServer,
-        'fileSize': fileSize,
-      },
-    );
+//     await _channel.invokeMethod(
+//       "startListening",
+//       {
+//         'id': currentListenerId,
+//         'args': args,
+//         'testServer': testServer,
+//         'fileSize': fileSize,
+//       },
+//     );
     return () {
       _channel.invokeMethod("cancelListening", currentListenerId);
       _callbacksById.remove(currentListenerId);
