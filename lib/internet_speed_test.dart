@@ -179,7 +179,7 @@ class InternetSpeedTest {
       {Map<String, dynamic> args,
       int fileSize = 200000}) async {
         print(_methodCallHandler);
-    print('arguments are ${_methodCallHandler.arguments}');
+    //print('arguments are ${_methodCallHandler.arguments}');
     
 //     _channel.setMethodCallHandler(_methodCallHandler);
 //     int currentListenerId = callbacksEnum.index;
