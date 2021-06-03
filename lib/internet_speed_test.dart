@@ -162,13 +162,18 @@ class InternetSpeedTest {
   }
   
   Future<CancelListening> cancelDownloadTesting() async {
+    print("===cancelDownloadTesting called===");
     return await _cancelListening(CallbacksEnum.START_DOWNLOAD_TESTING);
   }
 
   _cancelListening(CallbacksEnum callbacksEnum){
     int currentListenerId = callbacksEnum.index;
+    print("===currentListenerId called===");
+    print(currentListenerId);
     return () {
-      _channel.invokeMethod("cancelListening", currentListenerId);
+      //_channel.invokeMethod("cancelListening", currentListenerId);
+      downloadSteps = 0;
+      downloadRate = 0;
       _callbacksById.remove(currentListenerId);
     };
   }
