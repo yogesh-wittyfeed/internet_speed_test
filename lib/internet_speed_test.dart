@@ -123,7 +123,7 @@ class InternetSpeedTest {
     int currentListenerId = callbacksEnum.index;
     print('test $currentListenerId');
     _callbacksById[currentListenerId] = callback;
-    var cancel = await _channel.invokeMethod(
+    await _channel.invokeMethod(
       "startListening",
       {
         'id': currentListenerId,
@@ -132,10 +132,6 @@ class InternetSpeedTest {
         'fileSize': fileSize,
       },
     );
-    
-    await Future.delayed(Duration(seconds: 5));
-    cancel();
-    
     return () {
       _channel.invokeMethod("cancelListening", currentListenerId);
       _callbacksById.remove(currentListenerId);
@@ -163,13 +159,5 @@ class InternetSpeedTest {
     return await _startListening(Tuple3(onError, onProgress, onDone),
         CallbacksEnum.START_UPLOAD_TESTING, testServer,
         fileSize: fileSize);
-  }
-  
-  Future<CancelListening> cancelDownloading() async {
-        _channel.setMethodCallHandler(null);
-        return () {
-          _channel.invokeMethod("cancelListening", CallbacksEnum.START_UPLOAD_TESTING.index);
-          _callbacksById.remove(CallbacksEnum.START_UPLOAD_TESTING.index);
-        };
   }
 }
