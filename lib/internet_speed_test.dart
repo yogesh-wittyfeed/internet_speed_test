@@ -123,15 +123,15 @@ class InternetSpeedTest {
     int currentListenerId = callbacksEnum.index;
     print('test $currentListenerId');
     _callbacksById[currentListenerId] = callback;
-//     await _channel.invokeMethod(
-//       "startListening",
-//       {
-//         'id': currentListenerId,
-//         'args': args,
-//         'testServer': testServer,
-//         'fileSize': fileSize,
-//       },
-//     );
+    _channel.invokeMethod(
+      "startListening",
+      {
+        'id': currentListenerId,
+        'args': args,
+        'testServer': testServer,
+        'fileSize': fileSize,
+      },
+    );
     return () {
       _channel.invokeMethod("cancelListening", currentListenerId);
       _callbacksById.remove(currentListenerId);
