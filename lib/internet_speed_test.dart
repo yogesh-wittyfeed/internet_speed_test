@@ -171,7 +171,7 @@ class InternetSpeedTest {
     print("===currentListenerId called===");
     print(currentListenerId);
     return () {
-      //_channel.invokeMethod("cancelListening", currentListenerId);
+      _callbacksById[currentListenerId].item3(average, unit);
       downloadSteps = 0;
       downloadRate = 0;
       _callbacksById.remove(currentListenerId);
