@@ -64,8 +64,16 @@ class InternetSpeedTest {
             SpeedUnit unit = SpeedUnit.Kbps;
             rate /= 1000;
             unit = SpeedUnit.Mbps;
-            _callbacksById[call.arguments["id"]]
+            if(downloadSteps > 5){
+               _callbacksById[call.arguments["id"]].item3(average, unit);
+              downloadSteps = 0;
+              downloadRate = 0;
+              _callbacksById.remove(call.arguments["id"]);
+            }else{
+              _callbacksById[call.arguments["id"]]
                 .item2(call.arguments['percent'].toDouble(), rate, unit);
+            }
+            
           }
         } else if (call.arguments["id"] as int ==
             CallbacksEnum.START_UPLOAD_TESTING.index) {
