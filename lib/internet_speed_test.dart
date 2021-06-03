@@ -160,4 +160,16 @@ class InternetSpeedTest {
         CallbacksEnum.START_UPLOAD_TESTING, testServer,
         fileSize: fileSize);
   }
+  
+  Future<CancelListening> cancelDownloadTesting() async {
+    return await _cancelListening(CallbacksEnum.START_DOWNLOAD_TESTING);
+  }
+
+  _cancelListening(CallbacksEnum callbacksEnum){
+    int currentListenerId = callbacksEnum.index;
+    return () {
+      _channel.invokeMethod("cancelListening", currentListenerId);
+      _callbacksById.remove(currentListenerId);
+    };
+  }
 }
