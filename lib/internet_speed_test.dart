@@ -15,10 +15,8 @@ typedef void ProgressCallback(
 typedef void ErrorCallback(String errorMessage, String speedTestError);
 
 class InternetSpeedTest {
-//   static const MethodChannel _channel =
-//       const MethodChannel('internet_speed_test');
-  static MethodChannel _channel =
-       MethodChannel('internet_speed_test');
+  static const MethodChannel _channel =
+      const MethodChannel('internet_speed_test');
 
   Map<int, Tuple3<ErrorCallback, ProgressCallback, DoneCallback>>
       _callbacksById = new Map();
