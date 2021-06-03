@@ -123,7 +123,7 @@ class InternetSpeedTest {
     int currentListenerId = callbacksEnum.index;
     print('test $currentListenerId');
     _callbacksById[currentListenerId] = callback;
-    await _channel.invokeMethod(
+    var cancel = await _channel.invokeMethod(
       "startListening",
       {
         'id': currentListenerId,
@@ -132,6 +132,10 @@ class InternetSpeedTest {
         'fileSize': fileSize,
       },
     );
+    
+    await Future.delayed(Duration(seconds: 5));
+    cancel();
+    
     return () {
       _channel.invokeMethod("cancelListening", currentListenerId);
       _callbacksById.remove(currentListenerId);
