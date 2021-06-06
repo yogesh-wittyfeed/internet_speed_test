@@ -88,12 +88,7 @@ public class InternetSpeedTestPlugin(internal var activity: Activity, internal v
                                 argsMap["percent"] = percent
                                 argsMap["transferRate"] = transferRate
                                 argsMap["type"] = ListenerEnum.PROGRESS.ordinal
-                                
-                                if(percent > 20){
-                                    println("Yogesh ------------------- [PROGRESS] progress : - $percent%")
-                                    speedTestSocket.forceStopTask()
-                                }
-                                
+           
                                 activity.runOnUiThread {
                                     methodChannel.invokeMethod("callListener", argsMap)
                                 }
